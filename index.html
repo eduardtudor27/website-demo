@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="ro" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G.O.L.F. | Gentlemen Only, Ladies Forbidden</title>
+    <meta name="description" content="G.O.L.F. - Destinația supremă de lux și exclusivitate în inima Bucureștiului. Un club de noapte dedicat exclusiv domnilor.">
+    
+    <!-- Google Fonts: Playfair Display for elegant headings, Montserrat for clean body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            light: '#FCE79C',
+                            DEFAULT: '#CFA753', // Deep luxury gold
+                            dark: '#9E7E36',
+                        },
+                        dark: {
+                            super: '#030303',
+                            DEFAULT: '#0A0A0A',
+                            light: '#141414',
+                            lighter: '#1F1F1F',
+                            border: '#2A2A2A'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'noise': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')",
+                    },
+                    animation: {
+                        'marquee': 'marquee 25s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom CSS */
+        body {
+            background-color: #030303;
+            color: #ffffff;
+            overflow-x: hidden;
+            cursor: none; /* Hide default cursor for custom one */
+        }
+
+        /* Subtle Noise Overlay for texture */
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.03;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 10000;
+            pointer-events: none;
+        }
+        .cursor-dot {
+            width: 5px; height: 5px;
+            background-color: #CFA753;
+        }
+        .cursor-outline {
+            width: 30px; height: 30px;
+            border: 1px solid rgba(207, 167, 83, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        
+        /* Cursor Hover Effect Classes */
+        .hover-active .cursor-outline {
+            width: 50px; height: 50px;
+            background-color: rgba(207, 167, 83, 0.1);
+            border-color: #CFA753;
+        }
+
+        /* Hero Parallax Setup */
+        .hero-bg {
+            background-image: linear-gradient(to bottom, rgba(3,3,3,0.6) 0%, rgba(3,3,3,0.85) 70%, rgba(3,3,3,1) 100%), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            transform: translateZ(-1px) scale(2); /* Parallax trick */
+            z-index: -1;
+            height: 120%; /* Cover extra space for parallax */
+        }
+        
+        /* Gold Text Gradient */
+        .text-gradient-gold {
+            background: linear-gradient(to right, #CFA753, #FCE79C, #CFA753);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: shine 5s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+
+        /* Complex Gold Button Hover */
+        .btn-gold-complex {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            z-index: 1;
+        }
+        .btn-gold-complex::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        .btn-gold-complex:hover::before {
+            left: 100%;
+        }
+        .btn-gold-complex:hover {
+            box-shadow: 0 10px 30px -10px rgba(207, 167, 83, 0.6);
+            transform: translateY(-3px);
+        }
+
+        /* 3D Tilt Card Setup */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+        }
+        .tilt-card-content {
+            transform: translateZ(30px); /* Pops content out */
+        }
+
+        /* Navbar transitions */
+        #navbar {
+            transition: background-color 0.5s ease, padding 0.5s ease, border-color 0.5s ease;
+        }
+        .nav-scrolled {
+            background-color: rgba(3, 3, 3, 0.85);
+            backdrop-filter: blur(12px);
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+            border-bottom: 1px solid rgba(207, 167, 83, 0.15);
+        }
+
+        /* Tabs styling */
+        .tab-content { display: none; opacity: 0; transition: opacity 0.5s ease; }
+        .tab-content.active { display: grid; opacity: 1; }
+        
+        /* Hide scrollbar for tab list */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Chatbot typing animation */
+        .typing-indicator span {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background-color: #CFA753;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            body { cursor: auto; } /* Disable custom cursor on mobile */
+            .cursor-dot, .cursor-outline { display: none; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-gold selection:text-black">
+
+    <!-- Texture Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-6 md:px-12 flex justify-between items-center border-b border-transparent">
+        <a href="#" class="cursor-hover z-50 relative group flex flex-col items-center">
+            <span class="text-3xl md:text-4xl font-serif font-black tracking-[0.1em] text-white">
+                G.O.L.F.
+            </span>
+            <span class="text-[0.5rem] md:text-xs text-gold tracking-[0.2em] uppercase font-semibold mt-1 opacity-80 group-hover:opacity-100 transition-opacity">
+                Bucharest
+            </span>
+        </a>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden lg:flex space-x-10 items-center">
+            <a href="#concept" class="cursor-hover text-xs font-semibold uppercase tracking-[0.15em] text-gray-400 hover:text-gold transition-colors duration-300">Concept</a>
+            <a href="#evenimente" class="cursor-hover text-xs font-semibold uppercase tracking-[0.15em] text-gray-400 hover:text-gold transition-colors duration-300">Evenimente</a>
+            <a href="#meniu" class="cursor-hover text-xs font-semibold uppercase tracking-[0.15em] text-gray-400 hover:text-gold transition-colors duration-300">Meniu & Trabucuri</a>
+            <a href="#galerie" class="cursor-hover text-xs font-semibold uppercase tracking-[0.15em] text-gray-400 hover:text-gold transition-colors duration-300">Galerie</a>
+            <a href="#rezervari" class="cursor-hover btn-gold-complex border border-gold text-gold hover:bg-gold hover:text-black px-8 py-3 rounded-none text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300">
+                Rezervă Masa
+            </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="lg:hidden text-white z-50 focus:outline-none p-2">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-dark z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-all duration-500">
+        <a href="#concept" class="mobile-link text-3xl font-serif mb-8 text-gray-300 hover:text-gold transition-colors">Concept</a>
+        <a href="#evenimente" class="mobile-link text-3xl font-serif mb-8 text-gray-300 hover:text-gold transition-colors">Evenimente</a>
+        <a href="#meniu" class="mobile-link text-3xl font-serif mb-8 text-gray-300 hover:text-gold transition-colors">Selecție Meniu</a>
+        <a href="#galerie" class="mobile-link text-3xl font-serif mb-8 text-gray-300 hover:text-gold transition-colors">Galerie</a>
+        <a href="#rezervari" class="mobile-link text-2xl font-serif text-black bg-gold px-8 py-4 mt-4 uppercase tracking-widest text-sm font-bold">Rezervări VIP</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header id="home" class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <!-- Parallax Background -->
+        <div class="hero-bg absolute inset-0 w-full z-0 pointer-events-none" style="background-image: linear-gradient(to bottom, rgba(3,3,3,0.6) 0%, rgba(3,3,3,0.85) 70%, rgba(3,3,3,1) 100%), url('https://images.unsplash.com/photo-1572116469696-31de0f17cc34?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');"></div>
+        
+        <!-- Content Layer -->
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto mt-10">
+            <div class="reveal">
+                <div class="flex items-center justify-center mb-6 space-x-4">
+                    <div class="h-[1px] w-12 md:w-24 bg-gold"></div>
+                    <p class="text-gold uppercase tracking-[0.4em] text-xs md:text-sm font-semibold">Club de noapte privat</p>
+                    <div class="h-[1px] w-12 md:w-24 bg-gold"></div>
+                </div>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-9xl font-serif font-bold text-white mb-4 leading-none reveal delay-100">
+                G.O.L.F.
+            </h1>
+            <h2 class="text-xl md:text-3xl lg:text-4xl font-serif text-gray-300 mb-8 italic font-light reveal delay-200">
+                <span class="text-gradient-gold">G</span>entlemen <span class="text-gradient-gold">O</span>nly, <span class="text-gradient-gold">L</span>adies <span class="text-gradient-gold">F</span>orbidden
+            </h2>
+            
+            <p class="text-sm md:text-lg text-gray-400 mb-12 font-light max-w-2xl mx-auto tracking-wide reveal delay-300">
+                Nu este doar un club, este o declarație. Sanctuarul bărbaților puternici în inima Bucureștiului. Networking, băuturi rare, trabucuri fine și un spectacol vizual fascinant oferit de cele mai fermecătoare animatoare.
+            </p>
+            
+            <div class="reveal delay-400 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="#rezervari" class="cursor-hover btn-gold-complex inline-block bg-gold text-black font-bold uppercase tracking-[0.2em] text-xs px-10 py-5 hover:bg-white transition-colors duration-300 w-full sm:w-auto">
+                    Solicită Acces
+                </a>
+                <a href="#concept" class="cursor-hover inline-flex items-center text-white hover:text-gold uppercase tracking-[0.1em] text-xs font-semibold transition-colors duration-300 group">
+                    Descoperă Conceptul
+                    <i class="fas fa-arrow-right ml-3 transform group-hover:translate-x-2 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center">
+            <div class="w-[1px] h-16 bg-gray-600 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1/2 bg-gold animate-[bounce_2s_infinite]"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Infinite Text Marquee -->
+    <div class="bg-dark-border py-4 border-y border-gold/20 overflow-hidden relative z-20 flex">
+        <div class="whitespace-nowrap animate-marquee flex items-center">
+            <span class="text-gold text-xs uppercase tracking-[0.3em] font-semibold mx-8">Strictly Confidential</span>
+            <i class="fas fa-diamond text-gray-700 text-[10px]"></i>
+            <span class="text-white text-xs uppercase tracking-[0.3em] font-semibold mx-8">Sensual Entertainment</span>
+            <i class="fas fa-diamond text-gray-700 text-[10px]"></i>
+            <span class="text-gold text-xs uppercase tracking-[0.3em] font-semibold mx-8">Exclusive Networking</span>
+            <i class="fas fa-diamond text-gray-700 text-[10px]"></i>
+            <span class="text-white text-xs uppercase tracking-[0.3em] font-semibold mx-8">Gentlemen Only</span>
+            <i class="fas fa-diamond text-gray-700 text-[10px]"></i>
+            <span class="text-gold text-xs uppercase tracking-[0.3em] font-semibold mx-8">High-End Nightlife</span>
+            <i class="fas fa-diamond text-gray-700 text-[10px]"></i>
+            
+            <!-- Repeat for seamless loop -->
+            <span class="text-white text-xs uppercase tracking-[0.3em] font-semibold mx-8">Strictly Confidential</span>
+            <i class="fas fa-diamond text-gray-700 text-[10px]"></i>
+            <span class="text-gold text-xs uppercase tracking-[0.3em] font-semibold mx-8">Sensual Entertainment</span>
+            <i class="fas fa-diamond text-gray-700 text-[10px]"></i>
+            <span class="text-white text-xs uppercase tracking-[0.3em] font-semibold mx-8">Exclusive Networking</span>
+            <i class="fas fa-diamond text-gray-700 text-[10px]"></i>
+            <span class="text-gold text-xs uppercase tracking-[0.3em] font-semibold mx-8">Gentlemen Only</span>
+            <i class="fas fa-diamond text-gray-700 text-[10px]"></i>
+            <span class="text-white text-xs uppercase tracking-[0.3em] font-semibold mx-8">High-End Nightlife</span>
+            <i class="fas fa-diamond text-gray-700 text-[10px]"></i>
+        </div>
+    </div>
+
+    <!-- Concept Section -->
+    <section id="concept" class="py-32 bg-dark-super relative">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-dark-lighter to-transparent opacity-20 pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <!-- Images / Visuals -->
+                <div class="lg:col-span-5 relative reveal">
+                    <div class="relative z-10 w-4/5 ml-auto border border-dark-border p-2">
+                        <img src="https://images.unsplash.com/photo-1542282811-943ef1a6470b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Elegant Atmosphere" class="w-full h-[500px] object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="absolute bottom-10 -left-4 w-3/5 border border-gold/30 p-2 z-20 shadow-2xl bg-dark transform -translate-y-12">
+                        <img src="https://images.unsplash.com/photo-1582801648074-9549f6b95b87?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Premium Champagne" class="w-full h-[300px] object-cover sepia-[.3] hover:sepia-0 transition-all duration-700">
+                    </div>
+                </div>
+
+                <!-- Text Content -->
+                <div class="lg:col-span-7 lg:pl-10 reveal delay-200">
+                    <h2 class="text-gold flex items-center uppercase tracking-[0.3em] text-xs mb-4 font-bold">
+                        <span class="w-8 h-[1px] bg-gold mr-4"></span>
+                        Filozofia Noastră
+                    </h2>
+                    <h3 class="text-4xl md:text-6xl font-serif font-bold mb-8 leading-tight">
+                        Regulile jocului s-au schimbat. <span class="text-dark-border block mt-2 text-6xl" style="-webkit-text-stroke: 1px #CFA753;">Noi le dictăm.</span>
+                    </h3>
+                    
+                    <div class="space-y-6 text-gray-400 font-light leading-relaxed text-sm md:text-base border-l border-gold/20 pl-6">
+                        <p>
+                            G.O.L.F. (Gentlemen Only, Ladies Forbidden) a fost conceput dintr-o nevoie simplă, dar esențială: crearea unui spațiu în București unde domnii se pot retrage pentru a socializa, a încheia afaceri și a se bucura de viața de noapte la cel mai înalt nivel de intimitate.
+                        </p>
+                        <p>
+                            Experiența este completată de prezențe feminine de o eleganță rară. Animatoarele și dansatoarele noastre profesioniste transformă fiecare seară într-un spectacol vizual fascinant, aducând un mix perfect de senzualitate și rafinament, rezervat exclusiv oaspeților noștri.
+                        </p>
+                        <p>
+                            Aici nu există compromisuri. De la selecția impresionantă de băuturi fine, la humidorul nostru echipat cu trabucuri de top și entertainment-ul absolut, fiecare detaliu este o odă adusă masculinității.
+                        </p>
+                        <p class="text-white font-medium italic mt-4">
+                            "Ce se întâmplă la G.O.L.F., rămâne între domni."
+                        </p>
+                    </div>
+
+                    <div class="mt-12 flex space-x-12">
+                        <div>
+                            <h4 class="text-3xl font-serif font-bold text-gold mb-1">150+</h4>
+                            <p class="text-xs uppercase tracking-widest text-gray-500">Etichete Rare</p>
+                        </div>
+                        <div>
+                            <h4 class="text-3xl font-serif font-bold text-gold mb-1">50+</h4>
+                            <p class="text-xs uppercase tracking-widest text-gray-500">Selecții Trabucuri</p>
+                        </div>
+                        <div>
+                            <h4 class="text-3xl font-serif font-bold text-gold mb-1">VIP</h4>
+                            <p class="text-xs uppercase tracking-widest text-gray-500">Discreție Totală</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events / Agenda Section -->
+    <section id="evenimente" class="py-32 bg-dark border-t border-dark-border relative">
+        <!-- Glow effect -->
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 reveal">
+                <div>
+                    <h2 class="text-gold flex items-center uppercase tracking-[0.3em] text-xs mb-4 font-bold">
+                        <span class="w-8 h-[1px] bg-gold mr-4"></span>
+                        Agenda Clubului
+                    </h2>
+                    <h3 class="text-4xl md:text-5xl font-serif font-bold">Seri De Neuitat</h3>
+                </div>
+                <a href="#rezervari" class="hidden md:inline-block text-gray-400 hover:text-gold uppercase tracking-[0.1em] text-xs font-semibold transition-colors border-b border-transparent hover:border-gold pb-1">Rezervă pentru eveniment</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Event Card 1 -->
+                <div class="tilt-card cursor-hover reveal" data-tilt>
+                    <div class="bg-dark-light border border-dark-border p-6 h-[450px] relative group overflow-hidden tilt-card-content flex flex-col justify-end">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1574096079513-d8259312b785?ixlib=rb-4.0.3&w=600&q=80')] bg-cover bg-center opacity-20 group-hover:opacity-40 transition-opacity duration-500 group-hover:scale-110"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="text-gold text-sm font-bold tracking-widest mb-2">Vineri, 12 Nov</div>
+                            <h4 class="text-2xl font-serif font-bold text-white mb-2">Cigars & Cognac Night</h4>
+                            <p class="text-gray-400 text-sm font-light mb-6 line-clamp-2">Degustare exclusivistă de coniac XO acompaniată de o selecție de trabucuri limitate.</p>
+                            <span class="text-xs uppercase tracking-widest text-gold border border-gold/50 px-4 py-2 inline-block hover:bg-gold hover:text-black transition-colors">Detalii</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Card 2 -->
+                <div class="tilt-card cursor-hover reveal delay-100" data-tilt>
+                    <div class="bg-dark-light border border-dark-border p-6 h-[450px] relative group overflow-hidden tilt-card-content flex flex-col justify-end">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516997186121-1e967a90236a?ixlib=rb-4.0.3&w=600&q=80')] bg-cover bg-center opacity-20 group-hover:opacity-40 transition-opacity duration-500 group-hover:scale-110"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="text-gold text-sm font-bold tracking-widest mb-2">Sâmbătă, 13 Nov</div>
+                            <h4 class="text-2xl font-serif font-bold text-white mb-2">The Boss's Lounge</h4>
+                            <p class="text-gray-400 text-sm font-light mb-6 line-clamp-2">DJ Set live. Deep House, atmosferă vibrantă și bottle service premium la mesele VIP.</p>
+                            <span class="text-xs uppercase tracking-widest text-gold border border-gold/50 px-4 py-2 inline-block hover:bg-gold hover:text-black transition-colors">Detalii</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Card 3 -->
+                <div class="tilt-card cursor-hover reveal delay-200" data-tilt>
+                    <div class="bg-dark-light border border-dark-border p-6 h-[450px] relative group overflow-hidden tilt-card-content flex flex-col justify-end">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&w=600&q=80')] bg-cover bg-center opacity-20 group-hover:opacity-40 transition-opacity duration-500 group-hover:scale-110"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="text-gold text-sm font-bold tracking-widest mb-2">Joi, 18 Nov</div>
+                            <h4 class="text-2xl font-serif font-bold text-white mb-2">Poker & Whisky</h4>
+                            <p class="text-gray-400 text-sm font-light mb-6 line-clamp-2">Seară de networking privată. Acces permis exclusiv pe bază de invitație sau card de membru.</p>
+                            <span class="text-xs uppercase tracking-widest text-gold border border-gold/50 px-4 py-2 inline-block hover:bg-gold hover:text-black transition-colors">Detalii</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu / Selection Section -->
+    <section id="meniu" class="py-32 bg-dark-super border-y border-dark-border">
+        <div class="container mx-auto px-6 md:px-12">
+            
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-gold uppercase tracking-[0.3em] text-xs mb-4 font-bold">Selecția G.O.L.F.</h2>
+                <h3 class="text-4xl md:text-5xl font-serif font-bold">Rafinament Absolut</h3>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="flex justify-center border-b border-dark-border mb-12 overflow-x-auto scrollbar-hide reveal delay-100">
+                <button class="tab-btn active cursor-hover px-8 py-4 text-sm font-bold uppercase tracking-widest text-gold border-b-2 border-gold transition-colors whitespace-nowrap" data-target="tab-drinks">
+                    Spirits & Șampanie
+                </button>
+                <button class="tab-btn cursor-hover px-8 py-4 text-sm font-bold uppercase tracking-widest text-gray-500 border-b-2 border-transparent hover:text-gray-300 transition-colors whitespace-nowrap" data-target="tab-cigars">
+                    Humidor (Trabucuri)
+                </button>
+                <button class="tab-btn cursor-hover px-8 py-4 text-sm font-bold uppercase tracking-widest text-gray-500 border-b-2 border-transparent hover:text-gray-300 transition-colors whitespace-nowrap" data-target="tab-shisha">
+                    Narghilea Premium
+                </button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="max-w-4xl mx-auto reveal delay-200">
+                
+                <!-- Drinks Tab -->
+                <div id="tab-drinks" class="tab-content active grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+                    <div>
+                        <h4 class="text-2xl font-serif text-white mb-6 border-b border-dark-border pb-2">Single Malt Whisky</h4>
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Macallan 25 Years Old</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">3,500 RON</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Yamazaki 18 Years</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">2,800 RON</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Glenfiddich Grand Cru</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">1,900 RON</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-serif text-white mb-6 border-b border-dark-border pb-2">Champagne</h4>
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Dom Pérignon Luminous</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">2,500 RON</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Armand de Brignac Brut Gold</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">3,200 RON</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Louis Roederer Cristal</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">2,900 RON</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Cigars Tab -->
+                <div id="tab-cigars" class="tab-content grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+                    <div>
+                        <h4 class="text-2xl font-serif text-white mb-6 border-b border-dark-border pb-2">Cuba</h4>
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Cohiba Behike 52</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">850 RON</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Montecristo No. 2</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">250 RON</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Partagás Serie D No. 4</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">180 RON</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-serif text-white mb-6 border-b border-dark-border pb-2">Dom. Rep. & Nicaragua</h4>
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Arturo Fuente Opus X</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">450 RON</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Davidoff Winston Churchill</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">320 RON</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Padron 1964 Anniversary</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">280 RON</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Shisha Tab -->
+                <div id="tab-shisha" class="tab-content grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+                    <div class="md:col-span-2 text-center max-w-2xl mx-auto mb-6">
+                        <p class="text-gray-400 font-light text-sm">Aparate Wookah Premium din lemn de esență tare și cristal, combinate cu arome exclusiviste Dark Leaf și Blonde Leaf.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-serif text-white mb-6 border-b border-dark-border pb-2">Dark Blend (Intense)</h4>
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">MustHave Black Currant</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">180 RON</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Tangiers Cane Mint</span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">200 RON</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-serif text-white mb-6 border-b border-dark-border pb-2">G.O.L.F. Signature Mix</h4>
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">The Executive <span class="text-[10px] text-gray-500 block">Whisky, Cafea, Vanilie</span></span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">250 RON</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span class="text-gray-300 font-medium">Wall Street <span class="text-[10px] text-gray-500 block">Măr, Scorțișoară, Gheață</span></span>
+                                <span class="text-gold text-sm mx-4 flex-grow border-b border-dotted border-gray-700"></span>
+                                <span class="text-white font-serif tracking-wider">220 RON</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-20 reveal delay-300 flex flex-col items-center">
+                 <a href="javascript:void(0)" onclick="downloadMenu();" class="cursor-hover inline-flex items-center justify-center px-10 py-5 border border-gold/50 text-gold hover:bg-gold hover:text-black text-xs font-bold uppercase tracking-[0.2em] transition-all duration-500 group shadow-[0_0_20px_rgba(207,167,83,0.1)] hover:shadow-[0_0_30px_rgba(207,167,83,0.4)]">
+                    <i class="fas fa-file-pdf mr-3 text-lg group-hover:animate-bounce"></i> 
+                    Descarcă Meniul Complet
+                </a>
+                <p class="text-gray-600 text-[10px] mt-6 uppercase tracking-[0.2em]">Prețurile sunt exprimate în RON și includ TVA. Se adaugă 10% Service Charge.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="galerie" class="py-24 bg-dark">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[200px] md:auto-rows-[300px]">
+                
+                <div class="cursor-hover relative overflow-hidden group col-span-2 row-span-2 reveal">
+                    <img src="https://images.unsplash.com/photo-1559564478-43d922a90098?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Champagne Pour" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter grayscale-[30%] group-hover:grayscale-0">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-500"></div>
+                </div>
+                
+                <div class="cursor-hover relative overflow-hidden group reveal delay-100">
+                    <img src="https://images.unsplash.com/photo-1505236858219-8359eb29e329?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Lounge Area" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter grayscale-[50%] group-hover:grayscale-0">
+                </div>
+                
+                <div class="cursor-hover relative overflow-hidden group reveal delay-200">
+                    <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Premium Drinks" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter grayscale-[50%] group-hover:grayscale-0">
+                </div>
+                
+                <div class="cursor-hover relative overflow-hidden group col-span-2 reveal delay-100">
+                    <img src="https://images.unsplash.com/photo-1568827725945-8c031c2c2f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Sensual Entertainment" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter grayscale-[50%] group-hover:grayscale-0">
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="text-gold font-serif text-3xl font-bold tracking-wider">Atmosfera G.O.L.F.</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="rezervari" class="py-32 bg-dark-super relative overflow-hidden">
+        <!-- Background accents -->
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-gold opacity-[0.03] rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-0 left-0 w-96 h-96 bg-white opacity-[0.02] rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="border border-dark-border bg-dark/50 backdrop-blur-sm p-8 md:p-16 max-w-5xl mx-auto relative z-10 reveal shadow-2xl">
+                
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-4">Aprobare VIP</h2>
+                    <p class="text-gray-400 font-light text-sm md:text-base max-w-lg mx-auto">Accesul se face exclusiv pe bază de rezervare aprobată. Completați formularul de mai jos iar concierge-ul nostru va analiza cererea.</p>
+                </div>
+
+                <form onsubmit="event.preventDefault(); showCustomMessage('Cererea de rezervare a fost înregistrată. Un concierge vă va contacta curând.');" class="space-y-8">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="relative">
+                            <input type="text" id="name" required class="block px-0 py-3 w-full text-sm text-white bg-transparent border-0 border-b-2 border-dark-border appearance-none focus:outline-none focus:ring-0 focus:border-gold peer placeholder-transparent" placeholder="Nume Complet">
+                            <label for="name" class="absolute text-xs tracking-widest uppercase text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gold peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nume Complet</label>
+                        </div>
+                        <div class="relative">
+                            <input type="tel" id="phone" required class="block px-0 py-3 w-full text-sm text-white bg-transparent border-0 border-b-2 border-dark-border appearance-none focus:outline-none focus:ring-0 focus:border-gold peer placeholder-transparent" placeholder="Telefon">
+                            <label for="phone" class="absolute text-xs tracking-widest uppercase text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gold peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Telefon</label>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="relative">
+                            <!-- In a real scenario, use a custom datepicker for styling -->
+                            <input type="date" required class="block px-0 py-3 w-full text-sm text-white bg-transparent border-0 border-b-2 border-dark-border appearance-none focus:outline-none focus:ring-0 focus:border-gold peer [color-scheme:dark]">
+                            <label class="absolute text-xs tracking-widest uppercase text-gold duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]">Data Dorită</label>
+                        </div>
+                        <div class="relative">
+                            <select required class="block px-0 py-3 w-full text-sm text-white bg-dark border-0 border-b-2 border-dark-border appearance-none focus:outline-none focus:ring-0 focus:border-gold peer cursor-pointer">
+                                <option value="" disabled selected hidden>Selectați Zona</option>
+                                <option value="bar">Bar & Lounge (1-2 Pers)</option>
+                                <option value="stand">Stand High-Table (3-5 Pers)</option>
+                                <option value="vip">Masa VIP (6-10 Pers) - Min. Spend Aplicabil</option>
+                                <option value="private">Private Area - Necesită Card Membru</option>
+                            </select>
+                            <label class="absolute text-xs tracking-widest uppercase text-gold duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]">Zonă / Persoane</label>
+                            <div class="absolute right-0 top-3 text-gray-500 pointer-events-none"><i class="fas fa-chevron-down text-xs"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <textarea id="requests" rows="1" class="block px-0 py-3 w-full text-sm text-white bg-transparent border-0 border-b-2 border-dark-border appearance-none focus:outline-none focus:ring-0 focus:border-gold peer placeholder-transparent resize-none overflow-hidden" placeholder="Cereri Speciale" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                        <label for="requests" class="absolute text-xs tracking-widest uppercase text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gold peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cereri Speciale (Băuturi, Preferințe Trabucuri)</label>
+                    </div>
+
+                    <button type="submit" class="cursor-hover btn-gold-complex w-full bg-gold text-black font-bold uppercase tracking-[0.2em] py-5 mt-4 hover:bg-white transition-colors duration-300 text-sm">
+                        Trimite Solicitarea
+                    </button>
+                    
+                    <p class="text-center text-[10px] text-gray-600 uppercase tracking-widest mt-4">Accesul este strict 21+. Dress code obligatoriu: Smart Elegant / Dapper.</p>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-16 border-t border-dark-border text-center relative z-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-serif font-black tracking-[0.1em] text-white mb-2">G.O.L.F.</h2>
+            <p class="text-gold text-[10px] uppercase tracking-[0.3em] font-semibold mb-10">Gentlemen Only, Ladies Forbidden</p>
+            
+            <div class="flex justify-center space-x-6 mb-12">
+                <a href="#" class="cursor-hover w-12 h-12 rounded-full border border-dark-border flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition-all duration-300 group">
+                    <i class="fab fa-instagram group-hover:scale-110 transition-transform"></i>
+                </a>
+                <a href="#" class="cursor-hover w-12 h-12 rounded-full border border-dark-border flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition-all duration-300 group">
+                    <i class="fab fa-facebook-f group-hover:scale-110 transition-transform"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto text-sm text-gray-500 font-light mb-12 border-b border-dark-border pb-12">
+                <div>
+                    <h5 class="text-white uppercase tracking-widest text-xs font-bold mb-4">Locație</h5>
+                    <p>Centrul Vechi / Calea Victoriei<br>București, România</p>
+                </div>
+                <div>
+                    <h5 class="text-white uppercase tracking-widest text-xs font-bold mb-4">Contact Concierge</h5>
+                    <p>VIP: +40 700 000 000<br>office@golf-club.ro</p>
+                </div>
+                <div>
+                    <h5 class="text-white uppercase tracking-widest text-xs font-bold mb-4">Program</h5>
+                    <p>Miercuri - Duminică<br><span class="text-gold font-medium">22:00 - 06:00 (All Night)</span></p>
+                </div>
+            </div>
+
+            <p class="text-gray-700 text-xs font-light">
+                &copy; <span id="year"></span> G.O.L.F. Club București. Toate drepturile rezervate.<br>
+                <a href="#" class="cursor-hover hover:text-gray-400 transition-colors mt-4 inline-block">Termeni și Condiții</a> | <a href="#" class="cursor-hover hover:text-gray-400 transition-colors">Confidențialitate</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Custom Message Box -->
+    <div id="messageBox" class="fixed top-24 right-6 md:right-10 bg-gold text-black px-6 py-4 shadow-2xl z-[100] transition-all duration-500 opacity-0 pointer-events-none translate-y-[-20px] font-bold text-sm uppercase tracking-widest flex items-center border border-yellow-200">
+        <i class="fas fa-check mr-3"></i>
+        <span id="messageText">Mesaj trimis.</span>
+    </div>
+
+    <!-- AI Chatbot UI -->
+    <div id="chatbot-container" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[110] flex flex-col items-end">
+        <!-- Chat Window -->
+        <div id="chat-window" class="bg-dark border border-gold/30 shadow-[0_10px_40px_rgba(0,0,0,0.8)] w-[90vw] sm:w-96 h-[500px] mb-4 flex flex-col transition-all duration-300 opacity-0 scale-95 origin-bottom-right pointer-events-none">
+            
+            <!-- Chat Header -->
+            <div class="bg-dark-super border-b border-gold/20 p-4 flex justify-between items-center cursor-pointer" id="chat-header">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full border border-gold flex items-center justify-center text-gold bg-black relative">
+                        <i class="fas fa-user-tie"></i>
+                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-black"></span>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-serif font-bold text-sm">Concierge G.O.L.F.</h4>
+                        <p class="text-[10px] text-gold uppercase tracking-widest">Asistent Virtual</p>
+                    </div>
+                </div>
+                <button id="close-chat" class="text-gray-400 hover:text-gold transition-colors p-2">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            
+            <!-- Chat Messages Area -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 text-sm font-light scrollbar-hide bg-noise relative">
+                <!-- Initial Message -->
+                <div class="flex flex-col items-start w-full">
+                    <span class="text-[9px] text-gray-500 uppercase tracking-widest mb-1 ml-1">Concierge</span>
+                    <div class="bg-dark-lighter border border-dark-border text-gray-200 p-3 rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[85%] shadow-md">
+                        Bună seara, domnule. Sunt concierge-ul virtual al clubului G.O.L.F. Vă pot ajuta cu detalii despre rezervări, meniul nostru exclusivist sau programul serilor tematice?
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Typing Indicator (Hidden by default) -->
+            <div id="typing-indicator" class="hidden p-4 bg-dark border-t border-dark-border/50">
+                <div class="flex items-center text-gold text-xs uppercase tracking-widest">
+                    Concierge scrie <div class="typing-indicator ml-2"><span></span><span></span><span></span></div>
+                </div>
+            </div>
+
+            <!-- Chat Input Form -->
+            <div class="p-3 border-t border-gold/20 bg-dark-super">
+                <form id="chat-form" class="flex space-x-2">
+                    <input type="text" id="chat-input" class="flex-1 bg-dark-lighter border border-dark-border text-white px-4 py-3 text-sm focus:outline-none focus:border-gold rounded-none placeholder-gray-600 transition-colors" placeholder="Scrieți un mesaj..." autocomplete="off">
+                    <button type="submit" class="bg-gold text-black px-5 py-3 hover:bg-white hover:shadow-[0_0_15px_rgba(207,167,83,0.5)] transition-all duration-300">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Floating Action Button -->
+        <button id="chat-toggle" class="cursor-hover w-16 h-16 bg-gold rounded-full flex items-center justify-center text-black text-2xl shadow-[0_0_30px_rgba(207,167,83,0.3)] hover:scale-110 hover:bg-white transition-all duration-300 relative group z-50">
+            <i class="fas fa-comment-dots"></i>
+            <span class="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full border-2 border-dark-super shadow-lg">1</span>
+        </button>
+    </div>
+
+    <script>
+        // 1. Dynamic Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 2. Custom Message Function
+        function showCustomMessage(message) {
+            const msgBox = document.getElementById('messageBox');
+            const msgText = document.getElementById('messageText');
+            msgText.textContent = message;
+            
+            msgBox.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+            msgBox.classList.add('opacity-100', 'translate-y-0');
+            
+            setTimeout(() => {
+                msgBox.classList.remove('opacity-100', 'translate-y-0');
+                msgBox.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+            }, 4000);
+        }
+
+        // Generate and Download Menu Function
+        function downloadMenu() {
+            showCustomMessage('Meniul se pregătește pentru descărcare...');
+            
+            const menuContent = `
+G.O.L.F. CLUB BUCUREȘTI
+Gentlemen Only, Ladies Forbidden
+
+--- MENIU VIP EXCLUSIV ---
+
+[ SPIRITS & ȘAMPANIE ]
+Macallan 25 Years Old - 3,500 RON
+Yamazaki 18 Years - 2,800 RON
+Glenfiddich Grand Cru - 1,900 RON
+Dom Pérignon Luminous - 2,500 RON
+Armand de Brignac Brut Gold - 3,200 RON
+Louis Roederer Cristal - 2,900 RON
+
+[ HUMIDOR - TRABUCURI ]
+Cohiba Behike 52 - 850 RON
+Montecristo No. 2 - 250 RON
+Partagás Serie D No. 4 - 180 RON
+Arturo Fuente Opus X - 450 RON
+Davidoff Winston Churchill - 320 RON
+Padron 1964 Anniversary - 280 RON
+
+[ NARGHILEA PREMIUM ]
+MustHave Black Currant - 180 RON
+Tangiers Cane Mint - 200 RON
+The Executive (Whisky, Cafea, Vanilie) - 250 RON
+Wall Street (Măr, Scorțișoară, Gheață) - 220 RON
+
+* Prețurile sunt în RON și includ TVA.
+* Se aplică o taxă de servicii (Service Charge) de 10%.
+* Acces 21+. Dress code obligatoriu.
+            `;
+
+            // Create a Blob containing the text data
+            const blob = new Blob([menuContent], { type: 'text/plain;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            
+            // Create a temporary link and trigger download
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'Meniu_GOLF_Bucuresti.txt';
+            document.body.appendChild(link);
+            link.click();
+            
+            // Cleanup
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // 3. Custom Cursor Logic
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        const hoverElements = document.querySelectorAll('.cursor-hover, a, button, input, select, textarea');
+
+        // Check if device is touch (disable cursor logic if so)
+        if (window.matchMedia("(pointer: fine)").matches) {
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                
+                // Slight delay for outline
+                setTimeout(() => {
+                    cursorOutline.style.left = `${posX}px`;
+                    cursorOutline.style.top = `${posY}px`;
+                }, 50);
+            });
+
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    document.body.classList.add('hover-active');
+                });
+                el.addEventListener('mouseleave', () => {
+                    document.body.classList.remove('hover-active');
+                });
+            });
+        }
+
+        // 4. Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // 5. Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                mobileMenu.classList.add('opacity-100');
+                mobileBtn.innerHTML = '<i class="fas fa-times text-2xl text-gold"></i>';
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.remove('opacity-100');
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                mobileBtn.innerHTML = '<i class="fas fa-bars text-2xl"></i>';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        mobileBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if(isMenuOpen) toggleMenu();
+            });
+        });
+
+        // 6. Intersection Observer for Scroll Reveals
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => revealOnScroll.observe(el));
+        
+        // Trigger hero animations on load
+        setTimeout(() => {
+            document.querySelectorAll('#home .reveal').forEach(el => el.classList.add('active'));
+        }, 300);
+
+        // 7. Tabs Logic for Menu
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active from all
+                tabBtns.forEach(b => {
+                    b.classList.remove('active', 'text-gold', 'border-gold');
+                    b.classList.add('text-gray-500', 'border-transparent');
+                });
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                // Add active to clicked
+                btn.classList.add('active', 'text-gold', 'border-gold');
+                btn.classList.remove('text-gray-500', 'border-transparent');
+                
+                const targetId = btn.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        // 8. 3D Tilt Effect (Vanilla JS) for Event Cards
+        const tiltCards = document.querySelectorAll('.tilt-card');
+        
+        if (window.matchMedia("(pointer: fine)").matches) {
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left; // x position within the element.
+                    const y = e.clientY - rect.top;  // y position within the element.
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -10; // Max rotation 10deg
+                    const rotateY = ((x - centerX) / centerX) * 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+                    card.style.transition = 'transform 0.5s ease';
+                });
+                
+                card.addEventListener('mouseenter', () => {
+                    card.style.transition = 'none'; // Remove transition during hover for instant response
+                });
+            });
+        }
+
+        // 9. Gemini AI Chatbot Logic
+        const chatToggleBtn = document.getElementById('chat-toggle');
+        const closeChatBtn = document.getElementById('close-chat');
+        const chatHeader = document.getElementById('chat-header');
+        const chatWindow = document.getElementById('chat-window');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const chatMessages = document.getElementById('chat-messages');
+        const typingIndicator = document.getElementById('typing-indicator');
+        
+        let isChatOpen = false;
+        let chatHistory = [];
+        
+        // System Prompt to define the AI persona
+        const systemPrompt = "Ești concierge-ul VIP al clubului exclusivist G.O.L.F. (Gentlemen Only, Ladies Forbidden) din București. Te adresezi cu politețe extremă (Domnule / Dumneavoastră), ești rafinat, misterios și discret. Oferi informații despre rezervări (trebuie completat formularul de pe site pentru mese VIP), băuturi fine (șampanie, whisky rare), trabucuri cubaneze și prezența animatoarelor profesioniste elegante. Programul este Miercuri - Duminică, între 22:00 și 06:00. Fii concis, nu oferi răspunsuri excesiv de lungi și nu ieși niciodată din rolul de concierge al unui club de noapte de lux pentru bărbați.";
+
+        function toggleChat() {
+            isChatOpen = !isChatOpen;
+            if (isChatOpen) {
+                chatWindow.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                chatWindow.classList.add('opacity-100', 'scale-100');
+                
+                // Remove notification badge when opened
+                const badge = chatToggleBtn.querySelector('span');
+                if(badge) badge.remove();
+                
+                chatInput.focus();
+            } else {
+                chatWindow.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+                chatWindow.classList.remove('opacity-100', 'scale-100');
+            }
+        }
+
+        chatToggleBtn.addEventListener('click', toggleChat);
+        closeChatBtn.addEventListener('click', toggleChat);
+        chatHeader.addEventListener('click', (e) => {
+            if(e.target !== closeChatBtn && !closeChatBtn.contains(e.target)) {
+                toggleChat();
+            }
+        });
+
+        // Function to append message to UI
+        function appendMessage(text, isUser = false) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `flex flex-col w-full ${isUser ? 'items-end' : 'items-start'}`;
+            
+            const senderSpan = document.createElement('span');
+            senderSpan.className = `text-[9px] text-gray-500 uppercase tracking-widest mb-1 ${isUser ? 'mr-1' : 'ml-1'}`;
+            senderSpan.textContent = isUser ? 'Dumneavoastră' : 'Concierge';
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = `p-3 max-w-[85%] shadow-md text-sm ${
+                isUser 
+                ? 'bg-gold text-black rounded-tl-xl rounded-bl-xl rounded-tr-xl font-medium' 
+                : 'bg-dark-lighter border border-dark-border text-gray-200 rounded-tr-xl rounded-br-xl rounded-bl-xl'
+            }`;
+            bubbleDiv.textContent = text;
+            
+            msgDiv.appendChild(senderSpan);
+            msgDiv.appendChild(bubbleDiv);
+            chatMessages.appendChild(msgDiv);
+            
+            // Auto scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Handle Form Submit
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Display user message
+            appendMessage(message, true);
+            chatInput.value = '';
+            
+            // Add to history
+            chatHistory.push({ role: "user", parts: [{ text: message }] });
+
+            // Show typing indicator
+            typingIndicator.classList.remove('hidden');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                // Call Gemini API
+                const apiKey = ""; // API key is injected by Canvas
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: chatHistory,
+                    systemInstruction: {
+                        parts: [{ text: systemPrompt }]
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                typingIndicator.classList.add('hidden');
+                
+                if (result.candidates && result.candidates[0].content) {
+                    const aiResponse = result.candidates[0].content.parts[0].text;
+                    appendMessage(aiResponse, false);
+                    // Add AI response to history
+                    chatHistory.push({ role: "model", parts: [{ text: aiResponse }] });
+                } else {
+                    appendMessage("Mă scuzați, sistemul nostru întâmpină o eroare tehnică momentan. Vă rog să apelați la numărul VIP.", false);
+                }
+
+            } catch (error) {
+                console.error("AI Chat Error:", error);
+                typingIndicator.classList.add('hidden');
+                appendMessage("Mă scuzați, rețeaua pare indisponibilă. Vă rog să ne contactați telefonic.", false);
+            }
+        });
+    </script>
+</body>
+</html>
