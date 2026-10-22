@@ -1142,7 +1142,53 @@
                         <i class="fas fa-envelope-open-text mr-2" id="res-btn-icon"></i>
                         <span id="res-btn-text">Trimite Rezervarea pe Email</span>
                     </button>
+
+                    <!-- Email Server Configuration Bar (For 100% Delivery in Preview & Local) -->
+                    <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-gray-400">
+                        <span><i class="fas fa-satellite-dish text-gold mr-1.5"></i> Destinație rezervări: <strong class="text-gold-200">eduardtudor014@gmail.com</strong></span>
+                        <button type="button" onclick="toggleEmailConfigPanel()" class="text-gold hover:underline font-semibold flex items-center">
+                            <i class="fas fa-sliders mr-1.5"></i> Configurare / Testare Server Email
+                        </button>
+                    </div>
+
+                    <!-- Collapsible Email Setup Helper -->
+                    <div id="email-config-panel" class="hidden bg-obsidian border border-gold/30 rounded-2xl p-4 sm:p-5 text-xs space-y-3">
+                        <div class="flex items-start justify-between gap-2">
+                            <h4 class="text-gold font-bold uppercase tracking-wider">Setări Livrare Garantată pe Email</h4>
+                            <button type="button" onclick="toggleEmailConfigPanel()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            <strong>De ce nu vin uneori mailurile din fereastra de Preview?</strong> Serviciul gratuit <em>FormSubmit</em> blochează trimiterile invizibile dacă site-ul nu este încă urcat pe un domeniu real (<code>http://</code> sau <code>https://</code>) sau dacă nu ai apăsat încă pe linkul <strong>"Activate Form"</strong> trimis în <strong>Spam / Promotions</strong> pe <code>eduardtudor014@gmail.com</code>.
+                        </p>
+                        <div class="bg-obsidian-elevated p-3.5 rounded-xl border border-white/10 space-y-2">
+                            <label class="block text-gold font-semibold">Opțional: Cheie Web3Forms (Funcționează instant și din Preview / Calculator, fără domeniu!)</label>
+                            <p class="text-[11px] text-gray-400">Intră pe <a href="https://web3forms.com/" target="_blank" class="text-gold underline">web3forms.com</a>, scrie <code>eduardtudor014@gmail.com</code>, copiază codul <em>Access Key</em> primit pe mail și lipește-l aici:</p>
+                            <div class="flex gap-2">
+                                <input type="text" id="web3forms-key-input" placeholder="Ex: a1b2c3d4-e5f6-7890-abcd-..." class="flex-1 bg-obsidian border border-white/15 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-gold">
+                                <button type="button" onclick="saveWeb3FormsKey()" class="bg-gold text-black font-bold px-4 py-2 rounded-lg text-xs shrink-0">Salvează Cheia</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hidden Classic POST Form for First-Time FormSubmit Activation -->
+    <form id="fallback-post-form" action="https://formsubmit.co/eduardtudor014@gmail.com" method="POST" target="_blank" class="hidden">
+        <input type="hidden" name="_subject" id="post-subject" value="Rezervare VIP G.O.L.F. Bucuresti">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="Cod_Rezervare_VIP" id="post-code">
+        <input type="hidden" name="Nume_Client" id="post-name">
+        <input type="hidden" name="Telefon_VIP" id="post-phone">
+        <input type="hidden" name="Email_Client" id="post-email">
+        <input type="hidden" name="Data_Rezervarii" id="post-date">
+        <input type="hidden" name="Numar_Domni" id="post-guests">
+        <input type="hidden" name="Zona_VIP" id="post-zone">
+        <input type="hidden" name="Preferinte_Speciale" id="post-notes">
+    </form>
+
             </div>
         </div>
     </section>
@@ -1266,24 +1312,32 @@
 
     <!-- VIP RESERVATION EMAIL CONFIRMATION MODAL -->
     <div id="reservation-confirm-modal" class="fixed inset-0 z-[88] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-lg">
-        <div class="luxury-card w-full max-w-lg rounded-3xl border border-gold/50 p-6 sm:p-8 text-center shadow-2xl relative">
+        <div class="luxury-card w-full max-w-lg rounded-3xl border border-gold/50 p-6 sm:p-8 text-center shadow-2xl relative max-h-[92vh] overflow-y-auto">
             <button onclick="closeReservationModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full border border-white/15 text-gray-400 hover:text-white flex items-center justify-center">
                 <i class="fas fa-times"></i>
             </button>
-            <div class="w-16 h-16 rounded-full bg-gold/15 border border-gold flex items-center justify-center mx-auto mb-5 text-gold text-2xl">
+            <div class="w-16 h-16 rounded-full bg-gold/15 border border-gold flex items-center justify-center mx-auto mb-4 text-gold text-2xl">
                 <i class="fas fa-champagne-glasses"></i>
             </div>
             <span class="text-[10px] uppercase tracking-[0.3em] text-gold font-bold block mb-1">G.O.L.F. VIP Concierge</span>
-            <h3 class="font-serif text-3xl font-bold text-white mb-2">Rezervare Transmisă</h3>
-            <p id="res-modal-summary" class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-5"></p>
+            <h3 class="font-serif text-3xl font-bold text-white mb-2">Status Rezervare & Email</h3>
+            <p id="res-modal-summary" class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-4"></p>
 
-            <div class="bg-obsidian border border-gold/25 rounded-2xl p-4 text-left text-xs space-y-2 mb-6">
+            <!-- Live Server Delivery Diagnostic Box -->
+            <div id="res-server-status-box" class="rounded-2xl p-3.5 text-left text-xs mb-4 border">
+                <div class="flex items-start space-x-2.5">
+                    <i id="res-status-icon" class="fas fa-circle-info text-base mt-0.5"></i>
+                    <div id="res-status-message" class="leading-relaxed">Se verifică livrarea automată...</div>
+                </div>
+            </div>
+
+            <div class="bg-obsidian border border-gold/25 rounded-2xl p-4 text-left text-xs space-y-2 mb-5">
                 <div class="flex justify-between">
                     <span class="text-gray-400">Cod Acces Provizoriu:</span>
                     <span id="res-modal-code" class="text-gold font-mono font-bold">GOLF-VIP</span>
                 </div>
                 <div class="flex justify-between">
-                    <span class="text-gray-400">Notificare Administrator:</span>
+                    <span class="text-gray-400">Destinatar Principal:</span>
                     <span class="text-emerald-400 font-semibold">eduardtudor014@gmail.com</span>
                 </div>
                 <div class="flex justify-between">
@@ -1292,12 +1346,21 @@
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-3">
-                <a id="res-Direct-Mailto" href="#" class="w-full py-3.5 rounded-full border border-gold/50 text-gold hover:bg-gold/15 text-xs uppercase tracking-wider font-bold flex items-center justify-center transition-all">
-                    <i class="fas fa-paper-plane mr-2"></i> Trimite și din Aplicația Mail
-                </a>
-                <button onclick="closeReservationModal()" class="btn-luxury w-full py-3.5 rounded-full text-xs uppercase tracking-wider font-bold">
-                    Închide
+            <!-- Action Buttons for Guaranteed Instant Delivery -->
+            <div class="space-y-2.5">
+                <button type="button" onclick="triggerDirectFormSubmitPost()" class="w-full py-3 rounded-full bg-gold/20 border border-gold text-gold hover:bg-gold hover:text-black text-xs uppercase tracking-wider font-bold flex items-center justify-center transition-all">
+                    <i class="fas fa-bolt mr-2"></i> Activează / Trimite prin FormSubmit (Filă Nouă)
+                </button>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <a id="res-Gmail-Web" href="#" target="_blank" class="w-full py-3 rounded-full border border-white/20 text-white hover:border-gold hover:text-gold text-xs uppercase tracking-wider font-semibold flex items-center justify-center transition-all">
+                        <i class="fab fa-google text-gold mr-2"></i> Trimite din Gmail Web
+                    </a>
+                    <a id="res-Direct-Mailto" href="#" class="w-full py-3 rounded-full border border-white/20 text-white hover:border-gold hover:text-gold text-xs uppercase tracking-wider font-semibold flex items-center justify-center transition-all">
+                        <i class="fas fa-envelope text-gold mr-2"></i> Aplicația Mail (PC/Tel)
+                    </a>
+                </div>
+                <button onclick="closeReservationModal()" class="btn-luxury w-full py-3.5 rounded-full text-xs uppercase tracking-wider font-bold mt-2">
+                    Am Înțeles / Închide
                 </button>
             </div>
         </div>
@@ -1704,6 +1767,32 @@
         }
 
         const OWNER_EMAIL = 'eduardtudor014@gmail.com';
+        let savedWeb3FormsKey = '';
+        try {
+            savedWeb3FormsKey = localStorage.getItem('golf_web3forms_key') || '';
+        } catch (e) {}
+
+        function toggleEmailConfigPanel() {
+            const panel = document.getElementById('email-config-panel');
+            panel.classList.toggle('hidden');
+            const input = document.getElementById('web3forms-key-input');
+            if (input && savedWeb3FormsKey) input.value = savedWeb3FormsKey;
+        }
+
+        function saveWeb3FormsKey() {
+            const val = document.getElementById('web3forms-key-input').value.trim();
+            savedWeb3FormsKey = val;
+            try {
+                localStorage.setItem('golf_web3forms_key', val);
+            } catch (e) {}
+            document.getElementById('email-config-panel').classList.add('hidden');
+            showToast(val ? 'Cheia Web3Forms a fost salvată! Emailurile vor veni instant.' : 'Cheia Web3Forms a fost ștearsă.');
+        }
+
+        function triggerDirectFormSubmitPost() {
+            const form = document.getElementById('fallback-post-form');
+            if (form) form.submit();
+        }
 
         function closeReservationModal() {
             const modal = document.getElementById('reservation-confirm-modal');
@@ -1711,7 +1800,7 @@
             modal.classList.remove('flex');
         }
 
-        // Reservation Form Handler with Direct Email Dispatch to eduardtudor014@gmail.com + Client CC
+        // Reservation Form Handler with Multi-Channel Email Dispatch & Diagnostic Feedback
         document.getElementById('reservation-form').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -1730,11 +1819,22 @@
 
             submitBtn.disabled = true;
             btnIcon.className = 'fas fa-circle-notch fa-spin mr-2';
-            btnText.textContent = 'Se trimite rezervarea pe email...';
+            btnText.textContent = 'Se transmite rezervarea către serverul de mail...';
 
-            // Prepare backup mailto link with all formatted reservation details
-            const mailSubject = encodeURIComponent(`Rezervare VIP G.O.L.F. (${vipCode}) - ${name} - ${date}`);
-            const mailBody = encodeURIComponent(
+            // Populate Hidden Classic POST Form (Used for 1-click FormSubmit Activation / Direct Delivery)
+            document.getElementById('post-subject').value = `🥂 Rezervare VIP G.O.L.F. [${vipCode}] - ${name} (${date})`;
+            document.getElementById('post-code').value = vipCode;
+            document.getElementById('post-name').value = name;
+            document.getElementById('post-phone').value = phone;
+            document.getElementById('post-email').value = clientEmail;
+            document.getElementById('post-date').value = date;
+            document.getElementById('post-guests').value = guests;
+            document.getElementById('post-zone').value = zone;
+            document.getElementById('post-notes').value = notes;
+
+            // Prepare backup mailto & Gmail Web links with all formatted reservation details
+            const rawSubject = `Rezervare VIP G.O.L.F. (${vipCode}) - ${name} - ${date}`;
+            const rawBody =
                 `REZERVARE NOUĂ VIP - G.O.L.F. BUCUREȘTI\n` +
                 `====================================\n` +
                 `Cod Rezervare: ${vipCode}\n` +
@@ -1745,52 +1845,120 @@
                 `Număr Domni: ${guests}\n` +
                 `Zona Aleasă: ${zone}\n` +
                 `Preferințe: ${notes}\n` +
-                `====================================`
-            );
-            document.getElementById('res-Direct-Mailto').href = `mailto:${OWNER_EMAIL}?cc=${encodeURIComponent(clientEmail)}&subject=${mailSubject}&body=${mailBody}`;
+                `====================================`;
 
-            // Dispatch automatic email via FormSubmit AJAX API to eduardtudor014@gmail.com (and CC to client)
-            try {
-                await fetch(`https://formsubmit.co/ajax/${OWNER_EMAIL}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        _subject: `🥂 Rezervare VIP G.O.L.F. [${vipCode}] - ${name} (${date})`,
-                        _cc: clientEmail,
-                        _replyto: clientEmail,
-                        _template: 'table',
-                        Cod_Rezervare_VIP: vipCode,
-                        Nume_Client: name,
-                        Telefon_VIP: phone,
-                        Email_Client: clientEmail,
-                        Data_Rezervarii: date,
-                        Numar_Domni: guests,
-                        Zona_VIP: zone,
-                        Preferinte_Speciale: notes
-                    })
-                });
-            } catch (err) {
-                // Fallback handled smoothly by confirmation modal
+            const mailSubject = encodeURIComponent(rawSubject);
+            const mailBody = encodeURIComponent(rawBody);
+
+            document.getElementById('res-Direct-Mailto').href = `mailto:${OWNER_EMAIL}?cc=${encodeURIComponent(clientEmail)}&subject=${mailSubject}&body=${mailBody}`;
+            document.getElementById('res-Gmail-Web').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(OWNER_EMAIL)}&cc=${encodeURIComponent(clientEmail)}&su=${mailSubject}&body=${mailBody}`;
+
+            let deliverySuccess = false;
+            let statusHtml = '';
+            let statusType = 'warning'; // 'success' | 'warning'
+
+            // CHANNEL 1: If user configured a Web3Forms Key (Works everywhere, including Canvas Preview & local files)
+            if (savedWeb3FormsKey) {
+                try {
+                    const w3Res = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify({
+                            access_key: savedWeb3FormsKey,
+                            subject: rawSubject,
+                            from_name: 'G.O.L.F. VIP Concierge',
+                            replyto: clientEmail,
+                            Cod_Rezervare: vipCode,
+                            Nume_Client: name,
+                            Telefon_VIP: phone,
+                            Email_Client: clientEmail,
+                            Data_Serii: date,
+                            Numar_Domni: guests,
+                            Zona_VIP: zone,
+                            Preferinte: notes
+                        })
+                    });
+                    const w3Data = await w3Res.json();
+                    if (w3Data && w3Data.success) {
+                        deliverySuccess = true;
+                        statusType = 'success';
+                        statusHtml = `<strong>Livrare Automată Confirmată (Web3Forms)!</strong> Emailul a fost trimis instant în Inbox-ul <code>${OWNER_EMAIL}</code>.`;
+                    }
+                } catch (err) {}
+            }
+
+            // CHANNEL 2: FormSubmit AJAX with _captcha: "false" + Detailed Response Inspection
+            if (!deliverySuccess) {
+                try {
+                    const formData = new FormData();
+                    formData.append('_subject', `🥂 Rezervare VIP G.O.L.F. [${vipCode}] - ${name} (${date})`);
+                    formData.append('_captcha', 'false');
+                    formData.append('_template', 'table');
+                    formData.append('_replyto', clientEmail);
+                    formData.append('Cod_Rezervare_VIP', vipCode);
+                    formData.append('Nume_Client', name);
+                    formData.append('Telefon_VIP', phone);
+                    formData.append('Email_Client', clientEmail);
+                    formData.append('Data_Rezervarii', date);
+                    formData.append('Numar_Domni', guests);
+                    formData.append('Zona_VIP', zone);
+                    formData.append('Preferinte_Speciale', notes);
+
+                    const fsResponse = await fetch(`https://formsubmit.co/ajax/${OWNER_EMAIL}`, {
+                        method: 'POST',
+                        headers: { 'Accept': 'application/json' },
+                        body: formData
+                    });
+                    const fsData = await fsResponse.json();
+
+                    if (fsData && (fsData.success === true || fsData.success === 'true')) {
+                        deliverySuccess = true;
+                        statusType = 'success';
+                        statusHtml = `<strong>Trimis cu succes către ${OWNER_EMAIL}!</strong> (Notă: Dacă este prima rezervare, verifică și folderul <strong>Spam / Promotions</strong> în Gmail).`;
+                    } else if (fsData && fsData.message) {
+                        const msg = fsData.message.toLowerCase();
+                        if (msg.includes('activate') || msg.includes('activation')) {
+                            statusHtml = `<strong>Aproape gata (Necesită Activare):</strong> FormSubmit a trimis un email cu titlul <em>"Activate Form"</em> pe <code>${OWNER_EMAIL}</code> (verifică și în <strong>Spam</strong>). Apasă pe butonul de mai jos <strong>"Activează / Trimite prin FormSubmit"</strong> dacă nu l-ai primit încă!`;
+                        } else if (msg.includes('web server') || window.location.protocol === 'file:') {
+                            statusHtml = `<strong>Notă Mediu de Testare (Preview / Local):</strong> Serverul FormSubmit blochează trimiterile invizibile când pagina nu rulează pe un domeniu public. Apasă pe <strong>"Activează / Trimite prin FormSubmit (Filă Nouă)"</strong> sau <strong>"Trimite din Gmail Web"</strong> mai jos pentru a primi emailul chiar acum!`;
+                        } else {
+                            statusHtml = `<strong>Mesaj Server Mail:</strong> ${fsData.message}. Folosește unul dintre butoanele de mai jos pentru trimitere directă.`;
+                        }
+                    }
+                } catch (err) {
+                    statusHtml = `<strong>Mediu Preview Detectat:</strong> Fereastra de previzualizare restricționează trimiterea invizibilă în fundal. Apasă pe butonul <strong>"Activează / Trimite prin FormSubmit (Filă Nouă)"</strong> sau <strong>"Trimite din Gmail Web"</strong> de mai jos pentru a primi emailul instant pe <code>${OWNER_EMAIL}</code>!`;
+                }
             }
 
             submitBtn.disabled = false;
             btnIcon.className = 'fas fa-envelope-open-text mr-2';
             btnText.textContent = 'Trimite Rezervarea pe Email';
 
+            // Update Diagnostic Box Styling
+            const statusBox = document.getElementById('res-server-status-box');
+            const statusIcon = document.getElementById('res-status-icon');
+            const statusMsgEl = document.getElementById('res-status-message');
+
+            if (statusType === 'success') {
+                statusBox.className = 'rounded-2xl p-3.5 text-left text-xs mb-4 border bg-emerald-950/50 border-emerald-500/40 text-emerald-200';
+                statusIcon.className = 'fas fa-circle-check text-emerald-400 text-base mt-0.5';
+            } else {
+                statusBox.className = 'rounded-2xl p-3.5 text-left text-xs mb-4 border bg-amber-950/50 border-gold/50 text-amber-100';
+                statusIcon.className = 'fas fa-triangle-exclamation text-gold text-base mt-0.5';
+            }
+            statusMsgEl.innerHTML = statusHtml;
+
             // Populate & Open VIP Confirmation Modal
             document.getElementById('res-modal-code').textContent = vipCode;
             document.getElementById('res-modal-client-email').textContent = clientEmail;
             document.getElementById('res-modal-summary').innerHTML =
-                `Vă mulțumim, <strong>dl. ${name}</strong>! Detaliile rezervării pentru <strong>${zone}</strong> pe data de <strong>${date}</strong> au fost trimise pe email către <strong>${OWNER_EMAIL}</strong> și în copie către adresa dumneavoastră.`;
+                `Rezervarea pentru <strong>dl. ${name}</strong> (${zone}, data <strong>${date}</strong>) a fost pregătită.`;
 
             const confirmModal = document.getElementById('reservation-confirm-modal');
             confirmModal.classList.remove('hidden');
             confirmModal.classList.add('flex');
 
-            showToast(`Rezervarea a fost trimisă pe ${OWNER_EMAIL}!`);
+            showToast(deliverySuccess ? `Email trimis către ${OWNER_EMAIL}!` : `Verifică fereastra apărută pentru activarea emailului!`);
             e.target.reset();
             dateInput.value = new Date().toISOString().split('T')[0];
         });
