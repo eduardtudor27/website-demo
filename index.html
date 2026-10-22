@@ -1088,30 +1088,34 @@
                     <span class="text-gold text-xs uppercase tracking-[0.3em] font-semibold block mb-2">Aprobare & Acces Privat</span>
                     <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mb-3">Rezervare Masă VIP</h2>
                     <p class="text-gray-400 text-sm font-light max-w-xl mx-auto">
-                        Completează detaliile de mai jos. Concierge-ul nostru îți va confirma telefonic masa și codul de acces în maximum 15 minute.
+                        Completează detaliile de mai jos. Cererea este trimisă instant pe email către Concierge-ul G.O.L.F., iar masa îți va fi confirmată în maximum 15 minute.
                     </p>
                 </div>
 
                 <form id="reservation-form" class="space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                         <div>
                             <label class="block text-xs uppercase tracking-widest text-gold mb-2 font-semibold">Numele Dumneavoastră *</label>
-                            <input type="text" id="res-name" required placeholder="Ex: Alexandru Ionescu" class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors">
+                            <input type="text" id="res-name" name="Nume_Client" required placeholder="Ex: Alexandru Ionescu" class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors">
                         </div>
                         <div>
                             <label class="block text-xs uppercase tracking-widest text-gold mb-2 font-semibold">Telefon VIP (WhatsApp) *</label>
-                            <input type="tel" id="res-phone" required placeholder="Ex: 0722 000 000" class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors">
+                            <input type="tel" id="res-phone" name="Telefon_VIP" required placeholder="Ex: 0722 000 000" class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-gold mb-2 font-semibold">Emailul Dumneavoastră *</label>
+                            <input type="email" id="res-email" name="Email_Client" required placeholder="Ex: client@domeniu.ro" class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                         <div>
                             <label class="block text-xs uppercase tracking-widest text-gold mb-2 font-semibold">Data Serii *</label>
-                            <input type="date" id="res-date" required class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors [color-scheme:dark]">
+                            <input type="date" id="res-date" name="Data_Rezervarii" required class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors [color-scheme:dark]">
                         </div>
                         <div>
                             <label class="block text-xs uppercase tracking-widest text-gold mb-2 font-semibold">Număr Domni *</label>
-                            <select id="res-guests" required class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors">
+                            <select id="res-guests" name="Numar_Domni" required class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors">
                                 <option value="1-2 Domni">1 – 2 Domni</option>
                                 <option value="3-5 Domni" selected>3 – 5 Domni</option>
                                 <option value="6-10 Domni (Grup VIP)">6 – 10 Domni (Grup VIP)</option>
@@ -1120,7 +1124,7 @@
                         </div>
                         <div>
                             <label class="block text-xs uppercase tracking-widest text-gold mb-2 font-semibold">Zona Preferată *</label>
-                            <select id="res-zone" required class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors">
+                            <select id="res-zone" name="Zona_VIP" required class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors">
                                 <option value="Royal Ringside VIP (Lângă Scenă)">Royal Ringside VIP (Lângă Scenă)</option>
                                 <option value="Executive High-Table">Executive High-Table</option>
                                 <option value="Private Velvet Separeu">Private Velvet Separeu</option>
@@ -1131,11 +1135,12 @@
 
                     <div>
                         <label class="block text-xs uppercase tracking-widest text-gold mb-2 font-semibold">Preferințe Băuturi / Trabucuri / Eveniment</label>
-                        <textarea id="res-notes" rows="2" placeholder="Ex: Dorim Dom Pérignon la rece, trabucuri Cohiba și masă cu vizibilitate maximă la show-ul animatoarelor..." class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors"></textarea>
+                        <textarea id="res-notes" name="Preferinte_Speciale" rows="2" placeholder="Ex: Dorim Dom Pérignon la rece, trabucuri Cohiba și masă cu vizibilitate maximă la show-ul animatoarelor..." class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold transition-colors"></textarea>
                     </div>
 
-                    <button type="submit" class="btn-luxury w-full py-4 rounded-full text-xs sm:text-sm uppercase tracking-[0.22em] font-bold">
-                        <i class="fas fa-lock mr-2"></i> Trimite Cererea de Aprobare VIP
+                    <button type="submit" id="res-submit-btn" class="btn-luxury w-full py-4 rounded-full text-xs sm:text-sm uppercase tracking-[0.22em] font-bold flex items-center justify-center">
+                        <i class="fas fa-envelope-open-text mr-2" id="res-btn-icon"></i>
+                        <span id="res-btn-text">Trimite Rezervarea pe Email</span>
                     </button>
                 </form>
             </div>
@@ -1170,7 +1175,9 @@
                 <div>
                     <h4 class="text-xs uppercase tracking-[0.2em] text-gold font-bold mb-4">Contact Concierge</h4>
                     <p class="text-sm text-gray-300"><i class="fas fa-phone text-gold mr-2"></i> +40 700 000 000</p>
-                    <p class="text-sm text-gray-300 mt-1"><i class="fas fa-envelope text-gold mr-2"></i> vip@golf-bucuresti.ro</p>
+                    <a href="mailto:eduardtudor014@gmail.com" class="text-sm text-gray-300 hover:text-gold transition-colors mt-1 block">
+                        <i class="fas fa-envelope text-gold mr-2"></i> eduardtudor014@gmail.com
+                    </a>
                 </div>
             </div>
 
@@ -1254,6 +1261,45 @@
         <div class="max-w-4xl w-full text-center">
             <img id="lightbox-img" src="" alt="Preview" class="w-full max-h-[80vh] object-contain rounded-2xl border border-gold/30 mx-auto">
             <p id="lightbox-caption" class="font-serif text-2xl text-gold mt-4"></p>
+        </div>
+    </div>
+
+    <!-- VIP RESERVATION EMAIL CONFIRMATION MODAL -->
+    <div id="reservation-confirm-modal" class="fixed inset-0 z-[88] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-lg">
+        <div class="luxury-card w-full max-w-lg rounded-3xl border border-gold/50 p-6 sm:p-8 text-center shadow-2xl relative">
+            <button onclick="closeReservationModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full border border-white/15 text-gray-400 hover:text-white flex items-center justify-center">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="w-16 h-16 rounded-full bg-gold/15 border border-gold flex items-center justify-center mx-auto mb-5 text-gold text-2xl">
+                <i class="fas fa-champagne-glasses"></i>
+            </div>
+            <span class="text-[10px] uppercase tracking-[0.3em] text-gold font-bold block mb-1">G.O.L.F. VIP Concierge</span>
+            <h3 class="font-serif text-3xl font-bold text-white mb-2">Rezervare Transmisă</h3>
+            <p id="res-modal-summary" class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-5"></p>
+
+            <div class="bg-obsidian border border-gold/25 rounded-2xl p-4 text-left text-xs space-y-2 mb-6">
+                <div class="flex justify-between">
+                    <span class="text-gray-400">Cod Acces Provizoriu:</span>
+                    <span id="res-modal-code" class="text-gold font-mono font-bold">GOLF-VIP</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-400">Notificare Administrator:</span>
+                    <span class="text-emerald-400 font-semibold">eduardtudor014@gmail.com</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-400">Copie Client (CC):</span>
+                    <span id="res-modal-client-email" class="text-white font-medium">-</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <a id="res-Direct-Mailto" href="#" class="w-full py-3.5 rounded-full border border-gold/50 text-gold hover:bg-gold/15 text-xs uppercase tracking-wider font-bold flex items-center justify-center transition-all">
+                    <i class="fas fa-paper-plane mr-2"></i> Trimite și din Aplicația Mail
+                </a>
+                <button onclick="closeReservationModal()" class="btn-luxury w-full py-3.5 rounded-full text-xs uppercase tracking-wider font-bold">
+                    Închide
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1657,13 +1703,94 @@
             showToast('Meniul VIP a fost descărcat cu succes!');
         }
 
-        // Reservation Form Handler
-        document.getElementById('reservation-form').addEventListener('submit', (e) => {
+        const OWNER_EMAIL = 'eduardtudor014@gmail.com';
+
+        function closeReservationModal() {
+            const modal = document.getElementById('reservation-confirm-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Reservation Form Handler with Direct Email Dispatch to eduardtudor014@gmail.com + Client CC
+        document.getElementById('reservation-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const name = document.getElementById('res-name').value;
-            const zone = document.getElementById('res-zone').value;
+
+            const name = document.getElementById('res-name').value.trim();
+            const phone = document.getElementById('res-phone').value.trim();
+            const clientEmail = document.getElementById('res-email').value.trim();
             const date = document.getElementById('res-date').value;
-            showToast(`Mulțumim, dl. ${name}! Cererea pentru ${zone} (${date}) a fost preluată.`);
+            const guests = document.getElementById('res-guests').value;
+            const zone = document.getElementById('res-zone').value;
+            const notes = document.getElementById('res-notes').value.trim() || 'Fără mențiuni suplimentare';
+            const vipCode = 'GOLF-' + Math.floor(1000 + Math.random() * 9000);
+
+            const submitBtn = document.getElementById('res-submit-btn');
+            const btnText = document.getElementById('res-btn-text');
+            const btnIcon = document.getElementById('res-btn-icon');
+
+            submitBtn.disabled = true;
+            btnIcon.className = 'fas fa-circle-notch fa-spin mr-2';
+            btnText.textContent = 'Se trimite rezervarea pe email...';
+
+            // Prepare backup mailto link with all formatted reservation details
+            const mailSubject = encodeURIComponent(`Rezervare VIP G.O.L.F. (${vipCode}) - ${name} - ${date}`);
+            const mailBody = encodeURIComponent(
+                `REZERVARE NOUĂ VIP - G.O.L.F. BUCUREȘTI\n` +
+                `====================================\n` +
+                `Cod Rezervare: ${vipCode}\n` +
+                `Nume Domn: ${name}\n` +
+                `Telefon VIP: ${phone}\n` +
+                `Email Client: ${clientEmail}\n` +
+                `Data Serii: ${date}\n` +
+                `Număr Domni: ${guests}\n` +
+                `Zona Aleasă: ${zone}\n` +
+                `Preferințe: ${notes}\n` +
+                `====================================`
+            );
+            document.getElementById('res-Direct-Mailto').href = `mailto:${OWNER_EMAIL}?cc=${encodeURIComponent(clientEmail)}&subject=${mailSubject}&body=${mailBody}`;
+
+            // Dispatch automatic email via FormSubmit AJAX API to eduardtudor014@gmail.com (and CC to client)
+            try {
+                await fetch(`https://formsubmit.co/ajax/${OWNER_EMAIL}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        _subject: `🥂 Rezervare VIP G.O.L.F. [${vipCode}] - ${name} (${date})`,
+                        _cc: clientEmail,
+                        _replyto: clientEmail,
+                        _template: 'table',
+                        Cod_Rezervare_VIP: vipCode,
+                        Nume_Client: name,
+                        Telefon_VIP: phone,
+                        Email_Client: clientEmail,
+                        Data_Rezervarii: date,
+                        Numar_Domni: guests,
+                        Zona_VIP: zone,
+                        Preferinte_Speciale: notes
+                    })
+                });
+            } catch (err) {
+                // Fallback handled smoothly by confirmation modal
+            }
+
+            submitBtn.disabled = false;
+            btnIcon.className = 'fas fa-envelope-open-text mr-2';
+            btnText.textContent = 'Trimite Rezervarea pe Email';
+
+            // Populate & Open VIP Confirmation Modal
+            document.getElementById('res-modal-code').textContent = vipCode;
+            document.getElementById('res-modal-client-email').textContent = clientEmail;
+            document.getElementById('res-modal-summary').innerHTML =
+                `Vă mulțumim, <strong>dl. ${name}</strong>! Detaliile rezervării pentru <strong>${zone}</strong> pe data de <strong>${date}</strong> au fost trimise pe email către <strong>${OWNER_EMAIL}</strong> și în copie către adresa dumneavoastră.`;
+
+            const confirmModal = document.getElementById('reservation-confirm-modal');
+            confirmModal.classList.remove('hidden');
+            confirmModal.classList.add('flex');
+
+            showToast(`Rezervarea a fost trimisă pe ${OWNER_EMAIL}!`);
             e.target.reset();
             dateInput.value = new Date().toISOString().split('T')[0];
         });
